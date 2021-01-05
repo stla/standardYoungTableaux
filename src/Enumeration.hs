@@ -1,4 +1,8 @@
-module Enumeration where
+module Enumeration
+  ( ballotSequences
+  , standardYoungTableaux
+  )
+where
 import           Data.Sequence                  ( Seq
                                                 , (<|)
                                                 , (|>)
@@ -32,10 +36,7 @@ f2 a0 lambda0 isave = go (n - 1) a0 lambda0 it0
     | i == (-1)
     = (a, lambda, it)
     | lambda `index` i == it
-    = ( update isave i a
-      , adjust' (subtract 1) i lambda
-      , isave 
-      )
+    = (update isave i a, adjust' (subtract 1) i lambda, isave)
     | otherwise
     = go (i - 1) a lambda it
 
@@ -90,9 +91,7 @@ ballotSequences lambda0 =
 ballot2syt :: Seq Int -> Seq (Seq Int)
 ballot2syt a = go voidsyt 0
  where
-  v       = S.empty :: Seq Int
-  amax    = maximum a
-  voidsyt = S.replicate (amax + 1) v
+  voidsyt = S.replicate (maximum a + 1) (S.empty :: Seq Int)
   n       = S.length a
   go syt i
     | i == n    = syt
@@ -101,4 +100,4 @@ ballot2syt a = go voidsyt 0
 
 standardYoungTableaux :: [Int] -> [Seq (Seq Int)]
 standardYoungTableaux lambda = map ballot2syt (ballotSequences lambda)
-    
+
