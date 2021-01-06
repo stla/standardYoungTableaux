@@ -78,12 +78,12 @@ ballot n a0 lambda0 more =
 ballotSequences :: [Int] -> [Seq Int]
 ballotSequences lambda0 =
   let a0 = S.replicate n 0
-  in  let (a, more) = ballot n a0 lambda False in go [a] more
+  in  let (a, more) = ballot n a0 lambda False in go a [a] more
  where
   n = sum lambda0
   lambda = S.fromList lambda0
-  go !list !mr = if mr
-    then let (a', mr') = ballot n (head list) lambda True in go (a' : list) mr'
+  go x !list !mr = if mr
+    then let (a', mr') = ballot n x lambda True in go a' (a' : list) mr'
     else list
 
 ballot2syt :: Seq Int -> Seq (Seq Int)
