@@ -24,6 +24,7 @@ benchmark criterion-benchmarks
   build-depends:    base
                   , criterion
                   , standardYoungTableaux
+                  , combinat
   default-language: Haskell2010
   ghc-options:      -Wall
   hs-source-dirs:   benchmarks
